@@ -1,8 +1,8 @@
 [TOC]
 
-## Data Binding Library
+## Google Data Binding Library
 
-[Data Binding Library](https://developer.android.com/topic/libraries/data-binding/index.html)
+[Google Data Binding Library](https://developer.android.com/topic/libraries/data-binding/index.html)
 
 Android 2.1 (API level 7+)
 
