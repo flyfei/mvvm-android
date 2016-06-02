@@ -1,4 +1,5 @@
 <script src="http://7xs527.com2.z0.glb.qiniucdn.com/markdown_toc.js"></script>
+<div id="category" />
 
 [Google Data Binding Library](#Google Data Binding Library)<br>
 <div style="margin-left: 2em">[版本要求](#版本要求)<div><br>
