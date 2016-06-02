@@ -1,16 +1,16 @@
 [Google Data Binding Library](#Google Data Binding Library)<br>
-​	<span style="margin-left: 20px">[版本要求](#版本要求)</span>
-​	[配置环境](#配置环境)<br>
-​	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[创建数据对象](#创建数据对象)<br>
-​	<span style="margin-left: 20px">[版本要求](#版本要求)<span>
-​	[绑定数据](#绑定数据)<br>
-​	[绑定事件](#绑定事件)<br>
-​	[布局文件配置细节](#布局文件配置细节)<br>
-​		[variable](#variable)<br>
-​		[import](#import)<br>
-​		[显示集合中的数据](#显示集合中的数据)<br>
-​		[显示资源数据](#显示资源数据)<br>
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[版本要求](#版本要求)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[配置环境](#配置环境)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[创建数据对象](#创建数据对象)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[配置Layout](#配置Layout)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[绑定数据](#绑定数据)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[绑定事件](#绑定事件)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[布局文件配置细节](#布局文件配置细节)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[variable](#variable)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[import](#import)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[显示集合中的数据](#显示集合中的数据)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[显示资源数据](#显示资源数据)<br>
+        
 
 
 
