@@ -1,5 +1,5 @@
 [Google Data Binding Library](#Google Data Binding Library)<br>
-​	<span style="left: 20px">[版本要求](#版本要求)</span><div>
+​	<span style="left: 20px">[版本要求](#版本要求)</span><br>
 ​	[配置环境](#配置环境)<br>
 ​	[创建数据对象](#创建数据对象)<br>
 ​	[配置Layout](#配置Layout)<br>
