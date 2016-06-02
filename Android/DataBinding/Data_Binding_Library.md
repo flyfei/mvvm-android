@@ -6,7 +6,9 @@
 
 Android 2.1 (API level 7+)
 
-### 使用环境
+
+
+### 版本要求
 
 Android Studio >= **1.3**
 
@@ -110,3 +112,90 @@ protected void onCreate(Bundle savedInstanceState) {
 ```
 
 运行项目试试吧！
+
+### 绑定事件
+
+创建 MyHandlers.java 
+
+```java
+package com.tovi.mvvm;
+
+import android.util.Log;
+import android.view.View;
+
+/**
+ * @author <a href='mailto:zhaotengfei9@gmail.com'>Tengfei Zhao</a>
+ */
+public class MyHandlers {
+    public static final String TAG = MyHandlers.class.getSimpleName();
+
+    public void onClick(View view) {
+        Log.e(TAG, "onClick");
+    }
+}
+
+```
+
+配置 activity_main.xml 布局文件
+
+引入 MyHandlers 数据类型
+
+```xml
+<variable
+    name="handlers"
+    type="com.tovi.mvvm.MyHandlers" />
+```
+
+MyHandlers 和 View 进行绑定
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.tovi.mvvm.MyHandlers" />
+
+        <variable
+            name="user"
+            type="com.tovi.mvvm.User" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{handlers.onClick}"
+            android:text="@{user.name}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(user.age)}" />
+    </LinearLayout>
+</layout>
+
+```
+
+MainActivity.java 绑定 MyHandlers 数据
+
+```java
+ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+User user = new User("Test", 12);
+MyHandlers handlers = new MyHandlers();
+binding.setHandlers(handlers);
+binding.setUser(user);
+```
+
+执行项目，试试吧！
+
