@@ -1,5 +1,5 @@
 [Google Data Binding Library](#Google Data Binding Library)<br>
-​	<span style="margin-left: 2em">[版本要求](#版本要求)</span><div>
+​	<span style="left: 20px">[版本要求](#版本要求)</span><div>
 ​	[配置环境](#配置环境)<br>
 ​	[创建数据对象](#创建数据对象)<br>
 ​	[配置Layout](#配置Layout)<br>
@@ -74,7 +74,7 @@ public class User {
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
    <data>
-       <variable name="user" type="com.example.User"/>
+       <variable name="user" type="com.tovi.mvvm.User"/>
    </data>
    <LinearLayout
        android:orientation="vertical"
