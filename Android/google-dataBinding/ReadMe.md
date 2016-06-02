@@ -1,8 +1,8 @@
 [Google Data Binding Library](#Google Data Binding Library)<br>
-​	<span style="left: 20px">[版本要求](#版本要求)</span><br>
+​	<span style="margin-left: 20px">[版本要求](#版本要求)</span>
 ​	[配置环境](#配置环境)<br>
 ​	[创建数据对象](#创建数据对象)<br>
-​	[配置Layout](#配置Layout)<br>
+​	<span style="margin-left: 20px">[版本要求](#版本要求)<span>
 ​	[绑定数据](#绑定数据)<br>
 ​	[绑定事件](#绑定事件)<br>
 ​	[布局文件配置细节](#布局文件配置细节)<br>
