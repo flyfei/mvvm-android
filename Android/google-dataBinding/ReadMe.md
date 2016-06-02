@@ -1,7 +1,5 @@
-<script src="https://gist.github.com/cloudsben/6059930.js"></script>
-
 [Google Data Binding Library](#Google Data Binding Library)<br>
-<div style="margin-left: 2em">[版本要求](#版本要求)<div><br>
+​	<span style="margin-left: 2em">[版本要求](#版本要求)</span><div>
 ​	[配置环境](#配置环境)<br>
 ​	[创建数据对象](#创建数据对象)<br>
 ​	[配置Layout](#配置Layout)<br>
