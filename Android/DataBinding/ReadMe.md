@@ -166,7 +166,7 @@ MyHandlers 和 View 进行绑定
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
@@ -184,10 +184,9 @@ MyHandlers 和 View 进行绑定
             android:text="@{String.valueOf(user.age)}" />
     </LinearLayout>
 </layout>
-
 ```
 
-MainActivity.java 绑定 MyHandlers 数据
+MainActivity.java 绑定 MyHandlers 实例化数据
 
 ```java
 ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
@@ -198,4 +197,171 @@ binding.setUser(user);
 ```
 
 执行项目，试试吧！
+
+### 布局文件配置细节
+
+经过测试，发现：
+
+* 如果某对象里面的数据（方法或参数）只有实例化后才能访问到，则必须用 variable，并且 在 界面 进行 实例化数据绑定，这样才能访问到；反之，如果不用实例化可以访问到，直接 import 引入 ，访问数据就可以了。
+* 如果需要 传值进来，则用 variable。
+
+下面是 一些测试及其他细节介绍
+
+#### variable
+
+上述 MyHandlers 是这样 在布局里引入的
+
+```xml
+<variable
+     name="handlers"
+     type="com.tovi.mvvm.MyHandlers" />
+```
+
+也可以这样
+
+用 import 引入 MyHandlers ，在 通过 variable 改名字
+
+```xml
+<import type="com.tovi.mvvm.MyHandlers" />
+<variable
+     name="handlers"
+     type="MyHandlers" />
+```
+
+这样写是不是也可以通过呢，哈哈。
+
+#### import
+
+如果将 MyHandlers 里面的 TAG 显示到界面上，可以这样做
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.tovi.mvvm.MyHandlers" />
+
+        <variable
+            name="user"
+            type="com.tovi.mvvm.User" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{MyHandlers.TAG}" />
+    </LinearLayout>
+</layout>
+```
+
+改成这样的话，运行项目会 异常，说 找不到  setHandlers 方法。索性 他注掉。
+
+```java
+ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+User user = new User("Test", 12);
+MyHandlers handlers = new MyHandlers();
+// binding.setHandlers(handlers);
+binding.setUser(user);
+```
+
+运行项目。是不是发现，这次没有 用 variable ，也可以访问到数据。
+
+
+
+这样的话，在布局里面就可以访问 Android 提供的 方法了，比方说  View.GONE 等等
+
+```xml
+...
+<data>
+    <import type="android.view.View"/>
+</data>
+...
+
+<TextView
+   android:text="@{user.lastName}"
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   android:visibility="@{View.GONE}"/>
+
+...
+```
+
+
+
+如果系统的类名 和自己的冲突了，咋办， 比方说自己有个 类 com.tovi.mvvm.View
+
+这时，可以用 alias 字段 修改 名字为 MyView，这样，就不用 访问 View(com.tovi.mvvm.View)了，直接访问 MyView 就可以了。
+
+```xml
+<import type="android.view.View"/>
+<import type="com.tovi.mvvm.View"
+        alias="MyView"/>
+```
+
+
+
+
+
+#### 显示集合中的数据
+
+如果要从用户列表动态的获取并展示用户信息，可以这样
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="java.util.List" />
+
+        <import type="com.tovi.mvvm.User" />
+
+        <variable
+            name="userList"
+            type="List&lt;User>" />
+        <variable
+            name="index"
+            type="int" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="@{userList[index].name}"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="@{String.valueOf(userList[index].age)}"/>
+    </LinearLayout>
+
+</layout>
+```
+
+ps:
+
+* `List&lt;User>` 不能写成  `List<User>` ,否则会报异常
+
+  ```
+  Error:Execution failed for task ':app:dataBindingProcessLayoutsDebug'.
+  > org.xml.sax.SAXParseException; systemId: file:xxx/Android/DataBinding/app/build/intermediates/res/merged/debug/layout/activity_list.xml; lineNumber: 12; columnNumber: 23; 与元素类型 "null" 相关联的 "type" 属性值不能包含 '<' 字符。
+  ```
+
+* age 是 int 类型，不能直接 给 TextView 赋值， 所以 需要经过 String.valueOf() 处理下
 
