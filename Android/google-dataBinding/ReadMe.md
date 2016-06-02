@@ -1,15 +1,27 @@
 [Google Data Binding Library](#Google Data Binding Library)
+
 ​	[版本要求](#版本要求)
+
 ​	[配置环境](#配置环境)
+
 ​	[创建数据对象](#创建数据对象)
+
 ​	[配置Layout](#配置Layout)
+
 ​	[绑定数据](#绑定数据)
+
 ​	[绑定事件](#绑定事件)
+
 ​	[布局文件配置细节](#布局文件配置细节)
+
 ​		[variable](#variable)
+
 ​		[import](#import)
+
 ​		[显示集合中的数据](#显示集合中的数据)
+
 ​		[显示资源数据](#显示资源数据)
+
 
 
 
