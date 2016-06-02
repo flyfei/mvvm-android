@@ -36,6 +36,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{handlers.toListActivity}"
-            android:text="跳转到ListActivity" />
+            android:text="@{@string/start_listActivity}" />
     </LinearLayout>
 </layout>

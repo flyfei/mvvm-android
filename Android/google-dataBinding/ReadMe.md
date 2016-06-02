@@ -1,4 +1,20 @@
-[TOC]
+[Google Data Binding Library](#Google Data Binding Library)
+​	[版本要求](#版本要求)
+​	[配置环境](#配置环境)
+​	[创建数据对象](#创建数据对象)
+​	[配置Layout](#配置Layout)
+​	[绑定数据](#绑定数据)
+​	[绑定事件](#绑定事件)
+​	[布局文件配置细节](#布局文件配置细节)
+​		[variable](#variable)
+​		[import](#import)
+​		[显示集合中的数据](#显示集合中的数据)
+​		[显示资源数据](#显示资源数据)
+
+
+
+
+
 
 ## Google Data Binding Library
 
@@ -364,4 +380,37 @@ ps:
   ```
 
 * age 是 int 类型，不能直接 给 TextView 赋值， 所以 需要经过 String.valueOf() 处理下
+
+
+
+
+#### 显示资源数据
+
+如果显示资源文件 string.xml 中的数据
+
+string.xml
+
+```xml
+...
+
+<string name="start_listActivity">跳转到ListActivity</string>
+
+...
+```
+
+
+
+activit_main.xml
+
+```xml
+...
+
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:onClick="@{handlers.toListActivity}"
+    android:text="@{@string/start_listActivity}" />
+
+...
+```
 
