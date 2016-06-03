@@ -573,9 +573,15 @@ new
 
 
 
-
+<br>
 
 以上项目源码见 [Github google-dataBinding](https://github.com/flyfei/mvvm-android/tree/master/Android/google-dataBinding)
 
 
+
+<br>
+
+<br>
+
+Data Binding 基础讲到这儿，高级的语法，结合 Mvvm 才有魅力。见 [Github mvvm](https://github.com/flyfei/mvvm-android/tree/master/Android/mvvm)
 
