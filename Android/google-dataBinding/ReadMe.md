@@ -10,13 +10,19 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[import](#import)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[显示集合中的数据](#显示集合中的数据)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[显示资源数据](#显示资源数据)<br>
-        
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[include](#include)<br>
+                [表达式语法](#表达式语法)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[避免空指针](#避免空指针)<br>
+                
 
 
 
 
 ## Google Data Binding Library
+
+Time: 2016-06-02
+
+
 
 [Google Data Binding Library](https://developer.android.com/topic/libraries/data-binding/index.html)
 
@@ -220,6 +226,7 @@ binding.setUser(user);
 
 * 如果某对象里面的数据（方法或参数）只有实例化后才能访问到，则必须用 variable，并且 在 界面 进行 实例化数据绑定，这样才能访问到；反之，如果不用实例化可以访问到，直接 import 引入 ，访问数据就可以了。
 * 如果需要 传值进来，则用 variable。
+* xmlns 只能存在一个节点（**layout**）。
 
 下面是 一些测试及其他细节介绍
 
@@ -413,4 +420,162 @@ activit_main.xml
 
 ...
 ```
+
+
+
+#### include
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+...
+
+<variable
+          name="user"
+          type="com.tovi.mvvm.User" />
+
+...
+
+<include
+         bind:user="@{user}"
+         layout="@layout/layout_userinfo" />
+...
+```
+
+注：必须有 `xmlns:bind="http://schemas.android.com/apk/res-auto"`,否则，bind 会报错。
+
+**layout_userinfo.xml**
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.tovi.mvvm.User" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Include View"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{user.name}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(user.age)}" />
+    </LinearLayout>
+</layout>
+
+```
+
+如果 需要在 include 里面传递多个参数可以类似这样
+
+```xml
+<include
+    layout="@layout/layout_userinfo"
+    bind:handlers="@{handlers}"
+    bind:user="@{user}" />
+```
+
+或
+
+```xml
+<include
+    layout="@layout/layout_userinfo"
+	handlers="@{handlers}"
+    bind:user="@{user}" />
+```
+
+##### 延伸
+
+试着把 bind 去掉，这样就不用 `xmlns:bind="http://schemas.android.com/apk/res-auto"`了，
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="handlers"
+            type="com.tovi.mvvm.MyHandlers" />
+        <variable
+            name="user"
+            type="com.tovi.mvvm.User" />
+    </data>
+  
+...
+
+  <include
+            layout="@layout/layout_userinfo"
+            handlers="@{handlers}"
+            user="@{user}" />
+```
+
+这样也可以进行数据绑定，事件绑定。费解 为啥还要有 **bind** ！
+
+
+
+#### 表达式语法
+
+支持语法
+
+```
+Mathematical + - / * %
+String concatenation +
+Logical && ||
+Binary & | ^
+Unary + - ! ~
+Shift >> >>> <<
+Comparison == > < >= <=
+instanceof
+Grouping ()
+Literals - character, String, numeric, null
+Cast
+Method calls
+Field access
+Array access []
+Ternary operator ?:
+```
+
+不支持语法
+
+```
+this
+super
+new
+```
+
+
+
+#### 避免空指针
+
+如果View绑定的数据为空，则默认显示 默认值（null）
+
+当然，可以根据自己的需要进行设置。添加 default 字段，并定义默认值
+
+```xml
+<TextView android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   android:text="@{user.name, default=PLACEHOLDER}"/>
+```
+
+
+
+
+
+以上项目源码见 [Github google-dataBinding](https://github.com/flyfei/mvvm-android/tree/master/Android/google-dataBinding)
+
+
 

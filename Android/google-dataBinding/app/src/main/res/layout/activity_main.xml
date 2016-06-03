@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -37,5 +38,16 @@
             android:layout_height="wrap_content"
             android:onClick="@{handlers.toListActivity}"
             android:text="@{@string/start_listActivity}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="----include-------------------------------" />
+
+        <include
+
+            layout="@layout/layout_userinfo"
+            bind:handlers="@{handlers}"
+            bind:user="@{user}" />
     </LinearLayout>
 </layout>

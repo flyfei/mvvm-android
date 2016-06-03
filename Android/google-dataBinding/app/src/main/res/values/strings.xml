@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Android</string>
-    <string name="start_listActivity">跳转到ListActivity</string>
+    <string name="start_listActivity">Jump To ListActivity</string>
 </resources>

@@ -14,7 +14,7 @@ public class MyHandlers {
     public Context context;
 
     /**
-     * 注：请注意是否存在内存泄露情况
+     * Please note that there is a memory leak
      */
 
     MyHandlers(Context context) {
