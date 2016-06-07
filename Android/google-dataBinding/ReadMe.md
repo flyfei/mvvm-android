@@ -928,7 +928,7 @@ public class BindingAdapters {
 **注：**
 
 * model 必须有 get 方法
-* 官网上这样写的。@BindingAdapter({"bind:imageUrl", "bind:error"})，这样的话，会报⚠️ `Warning:Application namespace for attribute bind:imageUrl will be ignored.`
+* 官网上这样写的。@BindingAdapter({"bind:imageUrl", "bind:error"})，这样的话，会报⚠️ `Warning:Application namespace for attribute bind:imageUrl will be ignored.`,所以就改成了现在项目中的样式。 @BindingAdapter({"imageUrl", "error"})
 
 
 
