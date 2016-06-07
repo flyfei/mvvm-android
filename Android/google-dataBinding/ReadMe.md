@@ -11,12 +11,14 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[显示集合中的数据](#显示集合中的数据)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[显示资源数据](#显示资源数据)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[include](#include)<br>
-                [表达式语法](#表达式语法)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[表达式语法](#表达式语法)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[避免空指针](#避免空指针)<br>
-                
-
-
-
+        [更新UI](#)
+                [BaseObservable](#BaseObservable)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ObservableField](#ObservableField)
+                [BindingAdapter](#BindingAdapter)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        
 
 ## Google Data Binding Library
 
@@ -532,21 +534,21 @@ activit_main.xml
 支持语法
 
 ```
-Mathematical + - / * %
-String concatenation +
-Logical && ||
-Binary & | ^
-Unary + - ! ~
-Shift >> >>> <<
-Comparison == > < >= <=
+数学 + - / * %
+字符串连接 +
+逻辑 && ||
+二进制 & | ^
+一元运算 + - ! ~
+移位 >> >>> <<
+比较 == > < >= <=
 instanceof
-Grouping ()
+分组 ()
 Literals - character, String, numeric, null
 Cast
-Method calls
-Field access
-Array access []
-Ternary operator ?:
+方法 calls
+方法调用
+数据访问 []
+三元运算 ?:
 ```
 
 不支持语法
@@ -573,6 +575,364 @@ new
 
 
 
+
+
+### 更新UI
+
+#### BaseObservable
+
+Movie.java
+
+```java
+package com.tovi.mvvm.updateui.baseObservable;
+
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
+import com.tovi.mvvm.BR;
+
+/**
+ * @author <a href='mailto:zhaotengfei9@gmail.com'>Tengfei Zhao</a>
+ */
+public class Movie extends BaseObservable {
+    public String name;
+    public int sizeOfWatching;
+
+
+    public Movie(String name, int sizeOfWatching) {
+        this.name = name;
+        this.sizeOfWatching = sizeOfWatching;
+    }
+
+    @Bindable
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+        notifyPropertyChanged(BR.name);
+    }
+
+    @Bindable
+    public int getSizeOfWatching() {
+        return sizeOfWatching;
+    }
+
+    public void setSizeOfWatching(int sizeOfWatching) {
+        this.sizeOfWatching = sizeOfWatching;
+        notifyPropertyChanged(BR.sizeOfWatching);
+    }
+}
+```
+
+BaseObservableActivity.java
+
+```java
+package com.tovi.mvvm.updateui.baseObservable;
+
+import android.databinding.DataBindingUtil;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+
+import com.tovi.mvvm.R;
+import com.tovi.mvvm.databinding.ActivityBaseObservableBinding;
+
+public class BaseObservableActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private Movie movie;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ActivityBaseObservableBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_base_observable);
+        movie = new Movie("魔兽", 0);
+        binding.setMovie(movie);
+
+        findViewById(R.id.update_ui).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        movie.setSizeOfWatching(movie.getSizeOfWatching() + 1);
+    }
+}
+```
+
+activity_base_observable.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="movie"
+            type="com.tovi.mvvm.updateui.baseObservable.Movie" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="---------Observable Objects----------------------------"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{movie.name}"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(movie.sizeOfWatching)}"/>
+        <Button
+            android:id="@+id/update_ui"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update UI"
+            android:onClick="onlClick"/>
+    </LinearLayout>
+</layout>
+```
+
+
+
+#### ObservableField
+
+Car.java
+
+```java
+package com.tovi.mvvm.updateui.observableField;
+
+import android.databinding.ObservableField;
+
+/**
+ * @author <a href='mailto:zhaotengfei9@gmail.com'>Tengfei Zhao</a>
+ */
+public class Car {
+    public final ObservableField<String> name = new ObservableField<>();
+    public final ObservableField<Integer> number = new ObservableField<>();
+}
+
+```
+
+
+
+ObservableFieldActivity.java
+
+```java
+package com.tovi.mvvm.updateui.observableField;
+
+import android.databinding.DataBindingUtil;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+
+import com.tovi.mvvm.R;
+import com.tovi.mvvm.databinding.ActivityObservableFieldBinding;
+
+public class ObservableFieldActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private Car car;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ActivityObservableFieldBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_observable_field);
+        car = new Car();
+        car.name.set("Tesla");
+        car.number.set(0);
+        binding.setCar(car);
+
+        findViewById(R.id.update_tesla).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        car.number.set(car.number.get() + 1);
+    }
+}
+```
+
+activity_observable_field.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="car"
+            type="com.tovi.mvvm.updateui.observableField.Car" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ObservableField" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{car.name}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(car.number)}" />
+
+        <Button
+            android:id="@+id/update_tesla"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update UI" />
+
+    </LinearLayout>
+</layout>
+```
+
+
+
+#### BindingAdapter
+
+这里以 load img 为例
+
+Phone.java
+
+```java
+package com.tovi.mvvm.loadimg;
+
+/**
+ * @author <a href='mailto:zhaotengfei9@gmail.com'>Tengfei Zhao</a>
+ */
+public class Phone {
+    String url;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+}
+
+```
+
+LoadImgActivity.java
+
+```java
+package com.tovi.mvvm.loadimg;
+
+import android.databinding.DataBindingUtil;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import com.tovi.mvvm.R;
+import com.tovi.mvvm.databinding.ActivityLoadImgBinding;
+
+public class LoadImgActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ActivityLoadImgBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_load_img);
+        Phone phone = new Phone();
+        phone.url = "http://ww3.sinaimg.cn/bmiddle/0065It2Vgw1f4ia9c5ig8j318g0xcard.jpg";
+        binding.setPhone(phone);
+
+    }
+}
+```
+
+activity_load_img.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="phone"
+            type="com.tovi.mvvm.loadimg.Phone" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:error="@{phone.url}"
+            app:imageUrl="@{phone.url}" />
+
+        <Button
+            android:id="@+id/update_load_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update UI" />
+
+    </LinearLayout>
+</layout>
+```
+
+BindingAdapters.java
+
+```java
+package com.tovi.mvvm.loadimg;
+
+import android.databinding.BindingAdapter;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
+
+/**
+ * @author <a href='mailto:zhaotengfei9@gmail.com'>Tengfei Zhao</a>
+ */
+@SuppressWarnings("unused")
+public class BindingAdapters {
+
+    @BindingAdapter({"imageUrl", "error"})
+    public static void loadImage(ImageView imageView, String imageUrl, String error) {
+        Picasso.with(imageView.getContext()).load(imageUrl).into(imageView);
+    }
+}
+```
+
+**注：**
+
+* model 必须有 get 方法
+* 官网上这样写的。@BindingAdapter({"bind:imageUrl", "bind:error"})，这样的话，会报⚠️ `Warning:Application namespace for attribute bind:imageUrl will be ignored.`
+
+
+
+
 <br>
 
 以上项目源码见 [Github google-dataBinding](https://github.com/flyfei/mvvm-android/tree/master/Android/google-dataBinding)
@@ -583,5 +943,5 @@ new
 
 <br>
 
-Data Binding 基础讲到这儿，高级的语法，结合 Mvvm 才有魅力。见 [Github mvvm](https://github.com/flyfei/mvvm-android/tree/master/Android/mvvm)
+Data Binding 讲到这儿。结合 Mvvm ，见 [Github mvvm](https://github.com/flyfei/mvvm-android/tree/master/Android/mvvm)
 

@@ -49,5 +49,28 @@
             layout="@layout/layout_userinfo"
             bind:handlers="@{handlers}"
             bind:user="@{user}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="----update ui-------------------------------" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{handlers.toBaseObservableActivity}"
+            android:text="@{@string/start_baseObservableActivity}" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{handlers.toObservableFieldActivity}"
+            android:text="@{@string/start_observableFieldActivity}" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{handlers.toLoadImgActivity}"
+            android:text="@{@string/start_loadImgActivity}" />
     </LinearLayout>
 </layout>

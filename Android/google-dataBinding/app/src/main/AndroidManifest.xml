@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tovi.mvvm">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,7 +17,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListActivity"></activity>
+        <activity android:name=".ListActivity" />
+        <activity android:name=".updateui.baseObservable.BaseObservableActivity" />
+        <activity android:name=".updateui.observableField.ObservableFieldActivity" />
+        <activity android:name=".loadimg.LoadImgActivity"></activity>
     </application>
 
 </manifest>

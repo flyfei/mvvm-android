@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Android</string>
     <string name="start_listActivity">Jump To ListActivity</string>
+    <string name="start_baseObservableActivity">Jump To BaseObservableActivity</string>
+    <string name="start_observableFieldActivity">Jump To observableFieldActivity</string>
+    <string name="start_loadImgActivity">Jump To LoadImgActivity</string>
 </resources>
